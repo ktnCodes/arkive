@@ -51,6 +51,16 @@ cmake --build build
 .\build\arkive.exe
 ```
 
+### Logs
+
+Arkive now writes runtime logs to:
+
+```text
+%LOCALAPPDATA%\Arkive\Arkive\logs\arkive.log
+```
+
+The same messages are also echoed to stderr when launched from a terminal.
+
 ### 5. Test
 
 ```powershell

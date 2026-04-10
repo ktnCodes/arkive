@@ -26,6 +26,8 @@ set(CORE_SOURCES
     src/core/PhotoIngestor.h
     src/core/MessageIngestor.cpp
     src/core/MessageIngestor.h
+    src/core/SnapchatIngestor.cpp
+    src/core/SnapchatIngestor.h
 )
 
 set(MODEL_SOURCES
@@ -111,6 +113,7 @@ if(BUILD_TESTS)
         tests/test_geocode_cache.cpp
         tests/test_photo_ingestor.cpp
         tests/test_message_ingestor.cpp
+        tests/test_snapchat_ingestor.cpp
         tests/test_index_manager.cpp
         tests/test_file_tree_model.cpp
         tests/test_article_model.cpp

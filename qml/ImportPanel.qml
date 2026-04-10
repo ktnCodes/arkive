@@ -33,6 +33,12 @@ Item {
         onAccepted: messageIngestor.importChatDatabase(importPanel.urlToLocalPath(selectedFile))
     }
 
+    FolderDialog {
+        id: snapchatFolderDialog
+        title: "Select the main Snapchat export folder or its parent folder"
+        onAccepted: snapchatIngestor.importExportFolder(importPanel.urlToLocalPath(selectedFolder))
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: theme.sp24
@@ -353,57 +359,147 @@ Item {
             }
         }
 
-        // ─── Snapchat Source Card (Phase 2 placeholder) ───
+        // ─── Snapchat Source Card ───
         Rectangle {
             Layout.fillWidth: true
-            height: 80
+            height: snapchatCardContent.height + theme.sp32
             radius: theme.radiusMedium
             color: theme.bgSurface
             border.color: theme.borderSubtle
             border.width: 1
-            opacity: 0.6
 
-            RowLayout {
-                anchors.fill: parent
+            ColumnLayout {
+                id: snapchatCardContent
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
                 anchors.margins: theme.sp16
                 spacing: theme.sp12
 
-                Label {
-                    text: theme.iconSnap
-                    font.pixelSize: theme.fontTitle
-                    color: theme.textMuted
+                RowLayout {
+                    spacing: theme.sp12
+
+                    Label {
+                        text: theme.iconSnap
+                        font.pixelSize: theme.fontTitle
+                        color: theme.accent
+                    }
+
+                    ColumnLayout {
+                        spacing: theme.sp2
+                        Layout.fillWidth: true
+
+                        Label {
+                            text: "Snapchat"
+                            font.pixelSize: theme.fontBody
+                            font.weight: Font.DemiBold
+                            color: theme.textPrimary
+                        }
+                        Label {
+                            text: "Import a standard Snapchat export. You can select the main export folder or the parent folder that contains the split media parts."
+                            font.pixelSize: theme.fontSmall
+                            color: theme.textSecondary
+                            wrapMode: Text.Wrap
+                            Layout.fillWidth: true
+                        }
+                    }
                 }
 
                 ColumnLayout {
-                    spacing: theme.sp2
+                    Layout.fillWidth: true
+                    spacing: theme.sp4
+                    visible: snapchatIngestor.running
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: 6
+                        radius: 3
+                        color: theme.bgOverlay
+
+                        Rectangle {
+                            width: snapchatIngestor.totalFiles > 0
+                                ? parent.width * (snapchatIngestor.progress / snapchatIngestor.totalFiles)
+                                : 0
+                            height: parent.height
+                            radius: 3
+                            color: theme.accent
+
+                            Behavior on width { NumberAnimation { duration: theme.animFast } }
+                        }
+                    }
 
                     Label {
-                        text: "Snapchat"
-                        font.pixelSize: theme.fontBody
-                        font.weight: Font.DemiBold
-                        color: theme.textSecondary
-                    }
-                    Label {
-                        text: "Import from Snapchat data export (JSON) — coming next"
-                        font.pixelSize: theme.fontSmall
+                        text: snapchatIngestor.statusText
+                        font.pixelSize: theme.fontCaption
                         color: theme.textMuted
                     }
                 }
 
-                Item { Layout.fillWidth: true }
+                Label {
+                    text: snapchatIngestor.statusText
+                    font.pixelSize: theme.fontSmall
+                    color: snapchatIngestor.statusText.startsWith("Done") ? theme.accentGreen : theme.textSecondary
+                    visible: !snapchatIngestor.running && snapchatIngestor.statusText.length > 0
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                }
 
-                Rectangle {
-                    width: soonLabel2.width + theme.sp12
-                    height: 22
-                    radius: theme.radiusPill
-                    color: theme.bgOverlay
+                RowLayout {
+                    spacing: theme.sp8
 
-                    Label {
-                        id: soonLabel2
-                        text: "Soon"
-                        font.pixelSize: theme.fontCaption
-                        color: theme.textMuted
-                        anchors.centerIn: parent
+                    Rectangle {
+                        width: snapchatImportLabel.width + theme.sp24
+                        height: 36
+                        radius: theme.radiusMedium
+                        color: snapchatImportArea.pressed ? Qt.darker(theme.accent, 1.15)
+                             : snapchatImportArea.containsMouse ? theme.accentHover
+                             : theme.accent
+                        visible: !snapchatIngestor.running
+
+                        Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                        Label {
+                            id: snapchatImportLabel
+                            text: "Select Export Folder..."
+                            font.pixelSize: theme.fontSmall
+                            font.weight: Font.DemiBold
+                            color: theme.bgBase
+                            anchors.centerIn: parent
+                        }
+
+                        MouseArea {
+                            id: snapchatImportArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: snapchatFolderDialog.open()
+                        }
+                    }
+
+                    Rectangle {
+                        width: snapchatCancelLabel.width + theme.sp24
+                        height: 36
+                        radius: theme.radiusMedium
+                        color: snapchatCancelArea.containsMouse ? theme.bgOverlay : theme.bgSurface2
+                        border.color: theme.borderSubtle
+                        border.width: 1
+                        visible: snapchatIngestor.running
+
+                        Label {
+                            id: snapchatCancelLabel
+                            text: "Cancel"
+                            font.pixelSize: theme.fontSmall
+                            color: theme.textSecondary
+                            anchors.centerIn: parent
+                        }
+
+                        MouseArea {
+                            id: snapchatCancelArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: snapchatIngestor.cancel()
+                        }
                     }
                 }
             }
