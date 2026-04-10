@@ -1,0 +1,43 @@
+# Build
+build/
+build-*/
+cmake-build-*/
+
+# Qt generated
+moc_*
+qrc_*
+ui_*.h
+*.qmlc
+*.jsc
+.qmake.stash
+
+# Compiled
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+*.prl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# App data (never commit user vaults)
+.arkive/
