@@ -31,10 +31,14 @@ Item {
     }
 
     // Article content
-    ScrollView {
+    Flickable {
+        id: articleFlickable
         anchors.fill: parent
         visible: articleModel.loaded
         clip: true
+        contentWidth: width
+        contentHeight: contentCol.childrenRect.height + contentCol.y + 120
+        boundsBehavior: Flickable.StopAtBounds
 
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
@@ -49,16 +53,15 @@ Item {
             }
         }
 
-        Flickable {
-            contentWidth: parent.width
-            contentHeight: contentCol.height
+        Item {
+            width: articleFlickable.width
+            height: contentCol.childrenRect.height + contentCol.y + 120
 
             ColumnLayout {
                 id: contentCol
                 width: Math.min(parent.width - theme.sp48 * 2, 720)
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.topMargin: theme.sp32
+                x: (parent.width - width) / 2
+                y: theme.sp32
                 spacing: theme.sp16
 
                 // Title
@@ -148,7 +151,7 @@ Item {
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.topMargin: theme.sp16
-                    height: tocColumn.height + theme.sp24
+                    implicitHeight: tocColumn.implicitHeight + theme.sp24
                     color: theme.bgSurface
                     radius: theme.radiusMedium
                     border.color: theme.borderSubtle
@@ -157,10 +160,9 @@ Item {
 
                     ColumnLayout {
                         id: tocColumn
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.margins: theme.sp12
+                        width: parent.width - theme.sp24
+                        x: theme.sp12
+                        y: theme.sp12
                         spacing: theme.sp4
 
                         Label {

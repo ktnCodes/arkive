@@ -102,6 +102,40 @@ ApplicationWindow {
                 }
             }
 
+            // Import button
+            Rectangle {
+                width: 32
+                height: 32
+                radius: theme.radiusMedium
+                color: importBtn.containsMouse
+                    ? (root.importPanelVisible ? theme.accent : theme.bgOverlay)
+                    : (root.importPanelVisible ? Qt.alpha(theme.accent, 0.15) : "transparent")
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: theme.iconImport
+                    font.pixelSize: theme.fontSubhead
+                    color: root.importPanelVisible ? theme.accent
+                         : importBtn.containsMouse ? theme.textPrimary : theme.textSecondary
+                    anchors.centerIn: parent
+
+                    Behavior on color { ColorAnimation { duration: theme.animFast } }
+                }
+
+                MouseArea {
+                    id: importBtn
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: root.importPanelVisible = !root.importPanelVisible
+
+                    ToolTip.text: "Import data"
+                    ToolTip.visible: importBtn.containsMouse
+                    ToolTip.delay: 600
+                }
+            }
+
             // Dark/Light toggle
             Rectangle {
                 width: 32
@@ -261,6 +295,7 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     onFileSelected: function(path) {
+                        root.importPanelVisible = false
                         articleModel.loadFromFile(path)
                     }
                 }
@@ -272,11 +307,22 @@ ApplicationWindow {
             SplitView.fillWidth: true
             color: theme.bgBase
 
+            // Article view
             ArticleView {
                 anchors.fill: parent
+                visible: !importPanelVisible
+            }
+
+            // Import panel
+            ImportPanel {
+                anchors.fill: parent
+                visible: importPanelVisible
             }
         }
     }
+
+    // Track which view is active
+    property bool importPanelVisible: false
 
     // Empty state overlay
     Rectangle {
@@ -391,6 +437,7 @@ ApplicationWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
+                    onClicked: root.importPanelVisible = true
                 }
             }
         }

@@ -1,8 +1,8 @@
 # PRD: Arkive — Personal Life Wiki
 
-**Date:** 2026-04-10
+**Date:** 2026-04-10 (Updated: 2026-04-10)
 **Author:** Kevin
-**Status:** Draft
+**Status:** Phase 1 Complete — Phase 2 In Progress
 
 ---
 
@@ -29,9 +29,9 @@ All data stays on the user's machine. No accounts, no telemetry, no cloud depend
 
 | Module | Change Type | Notes |
 |--------|------------|-------|
-| `core/VaultManager` | New | File system operations — create vault, watch for changes, manage sections (people/, conversations/, memories/, places/, media/) |
-| `core/MarkdownParser` | New | Regex-based parser for markdown sections, YAML frontmatter, and `[[backlink]]` extraction |
-| `core/IndexManager` | New | Maintain `_index.md` per section and master index. Track article counts, last-compiled timestamps |
+| `core/VaultManager` | Done | File system operations — create vault at `~/.arkive/vault/`, watch for changes via QFileSystemWatcher, manage sections (people/, conversations/, memories/, places/, media/, raw/). Path-traversal-safe read/write. |
+| `core/MarkdownParser` | Done | Regex-based parser for markdown sections, YAML frontmatter, and `[[backlink]]` extraction. Converts markdown to HTML. |
+| `core/IndexManager` | Done | Maintain `_index.md` per section and master index. Track article counts. |
 | `core/IngestManager` | New | Orchestrate data import from multiple sources. Deduplication, progress reporting, ingestion log |
 | `core/PhotoIngestor` | New | Read EXIF metadata (date, GPS, camera), reverse geocode via Nominatim, generate grouped wiki entries |
 | `core/MessageIngestor` | New | Parse iMessage `chat.db` (SQLite), extract conversations, participants, timestamps, generate wiki entries |
@@ -40,15 +40,16 @@ All data stays on the user's machine. No accounts, no telemetry, no cloud depend
 | `core/WikiCompiler` | New | Scan raw entries, extract concept candidates (frequency + temporal + entity heuristics), prompt LLM to generate structured articles |
 | `core/WikiLinter` | New | 6 health checks: broken backlinks, source orphans, isolated articles, coverage gaps, stale indexes, raw backlog |
 | `core/QueryEngine` | New | TF-IDF relevance scoring, context window packing, system prompt construction for wiki-aware chat |
-| `models/FileTreeModel` | New | QAbstractItemModel exposing vault directory tree to QML |
-| `models/ArticleModel` | New | Single article data model for QML rendering |
-| `qml/Main.qml` | New | App shell — sidebar navigation + content area |
-| `qml/FileBrowser.qml` | New | Tree view of vault with real-time updates |
-| `qml/ArticleView.qml` | New | Markdown article renderer with backlink navigation |
+| `models/FileTreeModel` | Done | QAbstractItemModel exposing vault directory tree to QML |
+| `models/ArticleModel` | Done | Single article data model for QML rendering |
+| `qml/Theme.qml` | Done | Design token singleton — Catppuccin Mocha (dark) / Latte (light) palettes, 4pt spacing grid, typography scale, animation durations, icon glyphs. Runtime dark/light toggle via `darkMode` property |
+| `qml/Main.qml` | Done | App shell — SplitView sidebar + content area, custom handle, search bar (UI placeholder), toolbar with theme toggle, article count pill, settings gear |
+| `qml/FileBrowser.qml` | Done | Flat list of vault files with selection accent bar, hover/selected/default states, themed scrollbar, glyph icons |
+| `qml/ArticleView.qml` | Done | Max-width article renderer with backlink pills, "On this page" TOC, themed scrollbar |
 | `qml/ChatView.qml` | New | Chat interface — message bubbles, input, streaming responses |
 | `qml/ImportPanel.qml` | New | Data import wizard — source selection, folder picker, progress bars |
 | `qml/SkillPanel.qml` | New | Action buttons for compile, lint, rebuild index with progress indicators |
-| `qml/SettingsPanel.qml` | New | LLM provider toggle, API key entry, model selection, auto-hook toggles |
+| `qml/SettingsPanel.qml` | Done | Appearance toggle (dark/light), vault info, LLM provider radio (placeholder), data sources list with phase status pills. Close button, Flickable scroll. |
 
 ## User Stories
 
@@ -65,7 +66,7 @@ All data stays on the user's machine. No accounts, no telemetry, no cloud depend
 
 ## Acceptance Criteria
 
-- [ ] App launches on Windows, creates vault directory on first run, shows empty state with import prompt
+- [x] App launches on Windows, creates vault directory on first run, shows empty state with import prompt
 - [ ] Photo import: 50 photos imported → grouped wiki entries with EXIF date, GPS location (reverse geocoded), camera model
 - [ ] iMessage import: chat.db from iTunes backup → conversation entries with correct participants, timestamps, message counts
 - [ ] Snapchat import: JSON export → conversation and memory entries created, friends mapped to people/ entries
@@ -78,15 +79,15 @@ All data stays on the user's machine. No accounts, no telemetry, no cloud depend
 - [ ] Chat query: unknown topic → LLM explicitly states it doesn't have that information
 - [ ] Local LLM mode: zero external API calls (verified via network monitoring)
 - [ ] Cloud LLM mode: explicit user opt-in required before any API call is made
-- [ ] File browser: adding/deleting a .md file in the vault updates the tree view within 2 seconds
-- [ ] All vault data stored as plain markdown files openable in Obsidian or any text editor
+- [x] File browser: adding/deleting a .md file in the vault updates the tree view within 2 seconds
+- [x] All vault data stored as plain markdown files openable in Obsidian or any text editor
 
 ## Constraints & Assumptions
 
 - **iPhone data access**: iMessage data requires an iTunes/Apple Devices backup on Windows. User must create this backup manually; the app provides a wizard to locate the backup directory and `chat.db` file.
 - **Snapchat data**: User must request their data export from Snapchat (Settings → My Data → Submit Request). Export arrives as a ZIP with JSON files.
 - **Photo volume**: Photos grouped by day + location to prevent vault bloat (1000 photos ≠ 1000 entries). Grouping heuristic: same date + GPS within 500m = one entry.
-- **Qt 6.5+ required**: QML features and CMake integration depend on Qt 6.5 or later.
+- **Qt 6.8.3 (MinGW 13.1.0)**: Installed via aqtinstall at `C:\Qt\6.8.3\mingw_64\`. CMake 3.30.5 + Ninja 1.12.1. QML singleton workaround required — Theme.qml instantiated as regular type (not `pragma Singleton`) due to Qt 6.8 module resolution bug.
 - **Local LLM hardware**: llama.cpp with 7-8B parameter model (Q4_K_M quantization) requires ~8GB RAM. Users with less RAM can use cloud LLM only.
 - **No real-time sync**: This is import-based, not live monitoring. User re-imports when they want to update.
 - **Windows primary, Mac secondary**: Development and testing targets Windows first; Mac support via Qt cross-platform (no platform-specific code except backup directory paths).
@@ -94,7 +95,8 @@ All data stays on the user's machine. No accounts, no telemetry, no cloud depend
 
 ## Open Questions
 
-None — design decisions resolved during planning session (2026-04-10).
+- **Search implementation**: Toolbar search bar exists as UI placeholder. Needs FileTreeModel filtering or full-text index (Phase 3+ with QueryEngine, or simple filename filter for Phase 2).
+- **FileTreeModel depth**: Currently flat list, not tree. Needs recursive expansion for nested vault sections (e.g. `people/mom.md`).
 
 ## Out of Scope
 

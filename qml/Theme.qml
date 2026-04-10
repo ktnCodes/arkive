@@ -76,4 +76,5 @@ QtObject {
     readonly property string iconSnap:      "◫"
     readonly property string iconSun:       "☀"
     readonly property string iconMoon:      "☽"
+    readonly property string iconImport:    "⤓"
 }

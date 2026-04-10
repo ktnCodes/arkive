@@ -161,8 +161,15 @@ QString MarkdownParser::toHtml(const QString &content) const
     html.replace(listRe, "<li>\\1</li>");
 
     // Wrap consecutive <li> in <ul>
-    static QRegularExpression ulRe(R"((<li>.+</li>\n?)+)");
-    html.replace(ulRe, "<ul>\\0</ul>");
+    static QRegularExpression ulRe(R"((<li>[^<]*</li>\n?)+)");
+    auto ulMatch = ulRe.globalMatch(html);
+    int offset = 0;
+    while (ulMatch.hasNext()) {
+        auto m = ulMatch.next();
+        QString wrapped = "<ul>" + m.captured(0) + "</ul>";
+        html.replace(m.capturedStart() + offset, m.capturedLength(), wrapped);
+        offset += 11; // length of "<ul>" + "</ul>"
+    }
 
     // Paragraphs: double newline → <p>
     html.replace("\n\n", "</p><p>");

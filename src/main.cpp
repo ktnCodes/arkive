@@ -3,6 +3,9 @@
 #include <QQmlContext>
 
 #include "core/VaultManager.h"
+#include "core/GeocodeCache.h"
+#include "core/MessageIngestor.h"
+#include "core/PhotoIngestor.h"
 #include "models/FileTreeModel.h"
 #include "models/ArticleModel.h"
 
@@ -26,6 +29,12 @@ int main(int argc, char *argv[])
 
     ArticleModel articleModel;
 
+    // Initialize geocode cache and photo ingestor
+    QString cachePath = vaultManager.vaultPath() + "/../geocode_cache.db";
+    GeocodeCache geocodeCache(cachePath);
+    PhotoIngestor photoIngestor(&vaultManager, &geocodeCache);
+    MessageIngestor messageIngestor(&vaultManager);
+
     // Set up QML engine
     QQmlApplicationEngine engine;
 
@@ -33,6 +42,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("vaultManager", &vaultManager);
     engine.rootContext()->setContextProperty("fileTreeModel", &fileTreeModel);
     engine.rootContext()->setContextProperty("articleModel", &articleModel);
+    engine.rootContext()->setContextProperty("photoIngestor", &photoIngestor);
+    engine.rootContext()->setContextProperty("messageIngestor", &messageIngestor);
 
     // Load main QML
     using namespace Qt::StringLiterals;

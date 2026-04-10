@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql Network)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Sql Network Test)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -18,6 +18,14 @@ set(CORE_SOURCES
     src/core/MarkdownParser.h
     src/core/IndexManager.cpp
     src/core/IndexManager.h
+    src/core/ExifReader.cpp
+    src/core/ExifReader.h
+    src/core/GeocodeCache.cpp
+    src/core/GeocodeCache.h
+    src/core/PhotoIngestor.cpp
+    src/core/PhotoIngestor.h
+    src/core/MessageIngestor.cpp
+    src/core/MessageIngestor.h
 )
 
 set(MODEL_SOURCES
@@ -44,6 +52,7 @@ qt_add_qml_module(arkive
         qml/FileBrowser.qml
         qml/ArticleView.qml
         qml/SettingsPanel.qml
+        qml/ImportPanel.qml
         qml/Theme.qml
 )
 
@@ -64,3 +73,57 @@ install(TARGETS arkive
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+# --- Tests ---
+option(BUILD_TESTS "Build test suite" ON)
+if(BUILD_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        v1.14.0
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+
+    # Build a library from core + model sources so tests can link against it
+    add_library(arkive_lib STATIC
+        ${CORE_SOURCES}
+        ${MODEL_SOURCES}
+    )
+    target_link_libraries(arkive_lib PUBLIC
+        Qt6::Quick
+        Qt6::Sql
+        Qt6::Network
+    )
+    target_include_directories(arkive_lib PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_compile_definitions(arkive_lib PUBLIC ARKIVE_TESTING)
+
+    add_executable(arkive_tests
+        tests/test_main.cpp
+        tests/test_exif_reader.cpp
+        tests/test_markdown_parser.cpp
+        tests/test_vault_manager.cpp
+        tests/test_geocode_cache.cpp
+        tests/test_photo_ingestor.cpp
+        tests/test_message_ingestor.cpp
+        tests/test_index_manager.cpp
+        tests/test_file_tree_model.cpp
+        tests/test_article_model.cpp
+    )
+    target_link_libraries(arkive_tests PRIVATE
+        arkive_lib
+        Qt6::Test
+        GTest::gtest
+    )
+    target_include_directories(arkive_tests PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(arkive_tests)
+endif()

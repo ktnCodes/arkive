@@ -6,12 +6,24 @@
 #include <QTextStream>
 #include <QDebug>
 
+namespace {
+QString defaultVaultPath()
+{
+    QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    return QDir(home).filePath(".arkive/vault");
+}
+}
+
 VaultManager::VaultManager(QObject *parent)
+    : VaultManager(QString(), parent)
+{
+}
+
+VaultManager::VaultManager(const QString &vaultPathOverride, QObject *parent)
     : QObject(parent)
 {
-    // Store vault in user's home directory: ~/.arkive/vault/
-    QString home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    m_vaultPath = QDir(home).filePath(".arkive/vault");
+    // Store vault in user's home directory by default, or use an override for tests.
+    m_vaultPath = QDir::cleanPath(vaultPathOverride.isEmpty() ? defaultVaultPath() : vaultPathOverride);
 
     m_sections = {
         "people",

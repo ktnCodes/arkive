@@ -14,6 +14,7 @@ class VaultManager : public QObject
 
 public:
     explicit VaultManager(QObject *parent = nullptr);
+    explicit VaultManager(const QString &vaultPathOverride, QObject *parent = nullptr);
 
     QString vaultPath() const;
     QStringList sections() const;
