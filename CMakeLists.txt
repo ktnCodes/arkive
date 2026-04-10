@@ -38,11 +38,13 @@ qt_add_executable(arkive
 qt_add_qml_module(arkive
     URI Arkive
     VERSION 1.0
+    NO_CACHEGEN
     QML_FILES
         qml/Main.qml
         qml/FileBrowser.qml
         qml/ArticleView.qml
         qml/SettingsPanel.qml
+        qml/Theme.qml
 )
 
 # --- Link libraries ---

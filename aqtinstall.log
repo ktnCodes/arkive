@@ -32,3 +32,65 @@
 2026-04-10 02:50:37,565 - aqt.installer - INFO - installer 36660 Finished installation of ninja_win64.7z in 2.14447780
 2026-04-10 02:50:37,600 - aqt.main - INFO - installer 3452 Finished installation
 2026-04-10 02:50:37,601 - aqt.main - INFO - installer 3452 Time elapsed: 5.62675220 second
+2026-04-10 02:59:30,166 - aqt.main - INFO - installer 44480 aqtinstall(aqt) v3.3.0 on Python 3.13.12 [CPython MSC v.1944 64 bit (AMD64)]
+2026-04-10 02:59:30,167 - aqt.helper - DEBUG - helper 44480 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/Updates.xml.sha256
+2026-04-10 02:59:31,648 - aqt.helper - DEBUG - helper 44480 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/Updates.xml.sha256
+2026-04-10 02:59:33,540 - aqt.helper - DEBUG - helper 12248 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator.7z.sha256
+2026-04-10 02:59:33,548 - aqt.helper - DEBUG - helper 42316 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt32.7z.sha256
+2026-04-10 02:59:33,559 - aqt.helper - DEBUG - helper 44372 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt64.7z.sha256
+2026-04-10 02:59:33,573 - aqt.helper - DEBUG - helper 50248 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator_sdktool.7z.sha256
+2026-04-10 02:59:34,349 - aqt.helper - INFO - helper 44372 Downloading qt.tools.qtcreator...
+2026-04-10 02:59:34,349 - aqt.installer - DEBUG - installer 44372 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt64.7z
+2026-04-10 02:59:34,357 - aqt.helper - INFO - helper 42316 Downloading qt.tools.qtcreator...
+2026-04-10 02:59:34,357 - aqt.installer - DEBUG - installer 42316 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt32.7z
+2026-04-10 02:59:34,361 - aqt.helper - INFO - helper 50248 Downloading qt.tools.qtcreator...
+2026-04-10 02:59:34,361 - aqt.installer - DEBUG - installer 50248 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator_sdktool.7z
+2026-04-10 02:59:34,365 - aqt.helper - INFO - helper 12248 Downloading qt.tools.qtcreator...
+2026-04-10 02:59:34,365 - aqt.installer - DEBUG - installer 12248 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator.7z
+2026-04-10 02:59:35,126 - aqt.helper - DEBUG - helper 44372 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt64.7z
+2026-04-10 02:59:35,126 - aqt.helper - INFO - helper 44372 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:35,138 - aqt.helper - DEBUG - helper 12248 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator.7z
+2026-04-10 02:59:35,139 - aqt.helper - INFO - helper 12248 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:35,150 - aqt.helper - DEBUG - helper 42316 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359wininterrupt32.7z
+2026-04-10 02:59:35,150 - aqt.helper - INFO - helper 42316 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:35,156 - aqt.helper - DEBUG - helper 50248 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359qtcreator_sdktool.7z
+2026-04-10 02:59:35,156 - aqt.helper - INFO - helper 50248 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:35,524 - aqt.installer - INFO - installer 44372 Finished installation of wininterrupt64.7z in 1.96692880
+2026-04-10 02:59:35,530 - aqt.helper - DEBUG - helper 44372 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359jom.7z.sha256
+2026-04-10 02:59:35,545 - aqt.installer - INFO - installer 42316 Finished installation of wininterrupt32.7z in 1.99816540
+2026-04-10 02:59:35,853 - aqt.installer - INFO - installer 50248 Finished installation of qtcreator_sdktool.7z in 2.28257240
+2026-04-10 02:59:36,288 - aqt.helper - INFO - helper 44372 Downloading qt.tools.qtcreator...
+2026-04-10 02:59:36,289 - aqt.installer - DEBUG - installer 44372 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359jom.7z
+2026-04-10 02:59:38,056 - aqt.helper - DEBUG - helper 44372 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreator/9.0.0-0-202211220359jom.7z
+2026-04-10 02:59:38,056 - aqt.helper - INFO - helper 44372 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:38,823 - aqt.installer - INFO - installer 44372 Finished installation of jom.7z in 3.29459920
+2026-04-10 02:59:47,749 - aqt.installer - INFO - installer 12248 Finished installation of qtcreator.7z in 14.21205510
+2026-04-10 02:59:47,802 - aqt.helper - DEBUG - helper 44480 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/Updates.xml.sha256
+2026-04-10 02:59:49,753 - aqt.helper - DEBUG - helper 40820 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext32.7z.sha256
+2026-04-10 02:59:49,769 - aqt.helper - DEBUG - helper 48704 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext64.7z.sha256
+2026-04-10 02:59:50,540 - aqt.helper - INFO - helper 48704 Downloading qt.tools.qtcreatorcdbext...
+2026-04-10 02:59:50,540 - aqt.installer - DEBUG - installer 48704 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext64.7z
+2026-04-10 02:59:50,545 - aqt.helper - INFO - helper 40820 Downloading qt.tools.qtcreatorcdbext...
+2026-04-10 02:59:50,545 - aqt.installer - DEBUG - installer 40820 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext32.7z
+2026-04-10 02:59:51,291 - aqt.helper - DEBUG - helper 48704 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext64.7z
+2026-04-10 02:59:51,291 - aqt.helper - DEBUG - helper 40820 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatorcdbext/9.0.0-0-202211220359qtcreatorcdbext32.7z
+2026-04-10 02:59:51,291 - aqt.helper - INFO - helper 48704 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:51,292 - aqt.helper - INFO - helper 40820 Redirected: qt.mirror.constant.com
+2026-04-10 02:59:52,055 - aqt.installer - INFO - installer 40820 Finished installation of qtcreatorcdbext32.7z in 2.30431160
+2026-04-10 02:59:52,084 - aqt.installer - INFO - installer 48704 Finished installation of qtcreatorcdbext64.7z in 2.31655230
+2026-04-10 02:59:52,122 - aqt.helper - DEBUG - helper 44480 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/Updates.xml.sha256
+2026-04-10 02:59:54,057 - aqt.helper - DEBUG - helper 49996 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordbg/9.0.0-0-202211220359qtcreator-debug.7z.sha256
+2026-04-10 02:59:54,804 - aqt.helper - INFO - helper 49996 Downloading qt.tools.qtcreatordbg...
+2026-04-10 02:59:54,804 - aqt.installer - DEBUG - installer 49996 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordbg/9.0.0-0-202211220359qtcreator-debug.7z
+2026-04-10 02:59:55,562 - aqt.helper - DEBUG - helper 49996 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordbg/9.0.0-0-202211220359qtcreator-debug.7z
+2026-04-10 02:59:55,562 - aqt.helper - INFO - helper 49996 Redirected: qt.mirror.constant.com
+2026-04-10 03:00:13,421 - aqt.installer - INFO - installer 49996 Finished installation of qtcreator-debug.7z in 19.36617970
+2026-04-10 03:00:13,466 - aqt.helper - DEBUG - helper 44480 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/Updates.xml.sha256
+2026-04-10 03:00:15,346 - aqt.helper - DEBUG - helper 35948 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordev/9.0.0-0-202211220359qtcreator_dev.7z.sha256
+2026-04-10 03:00:16,086 - aqt.helper - INFO - helper 35948 Downloading qt.tools.qtcreatordev...
+2026-04-10 03:00:16,087 - aqt.installer - DEBUG - installer 35948 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordev/9.0.0-0-202211220359qtcreator_dev.7z
+2026-04-10 03:00:16,817 - aqt.helper - DEBUG - helper 35948 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_qtcreator/qt.tools.qtcreatordev/9.0.0-0-202211220359qtcreator_dev.7z
+2026-04-10 03:00:16,817 - aqt.helper - INFO - helper 35948 Redirected: qt.mirror.constant.com
+2026-04-10 03:00:19,916 - aqt.installer - INFO - installer 35948 Finished installation of qtcreator_dev.7z in 4.57193120
+2026-04-10 03:00:19,955 - aqt.main - INFO - installer 44480 Finished installation
+2026-04-10 03:00:19,955 - aqt.main - INFO - installer 44480 Time elapsed: 49.78840180 second

@@ -10,53 +10,154 @@ ApplicationWindow {
     minimumHeight: 600
     visible: true
     title: "Arkive — Your Life Wiki"
-    color: "#1e1e2e"
+    color: theme.bgBase
 
-    // Color palette (Catppuccin Mocha inspired)
-    readonly property color bgBase: "#1e1e2e"
-    readonly property color bgSurface: "#313244"
-    readonly property color bgOverlay: "#45475a"
-    readonly property color textColor: "#cdd6f4"
-    readonly property color textSubtle: "#a6adc8"
-    readonly property color accentColor: "#89b4fa"
-    readonly property color accentSecondary: "#f5c2e7"
-    readonly property color borderColor: "#585b70"
+    // Theme instance — accessible from all child QML files via scope chain
+    Theme { id: theme }
 
     header: ToolBar {
-        background: Rectangle { color: root.bgSurface }
-        height: 48
+        background: Rectangle { color: theme.bgSurface }
+        height: theme.sp48
 
         RowLayout {
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: theme.sp16
+            anchors.rightMargin: theme.sp16
+            spacing: theme.sp12
+
+            // Logo
+            Label {
+                text: theme.iconHex
+                font.pixelSize: theme.fontTitle
+                color: theme.accent
+            }
 
             Label {
-                text: "⬡ Arkive"
+                text: "Arkive"
                 font.pixelSize: 18
-                font.bold: true
-                color: root.accentColor
+                font.weight: Font.Bold
+                color: theme.textPrimary
+                Layout.rightMargin: theme.sp8
+            }
+
+            // Search bar
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.maximumWidth: 400
+                height: 32
+                radius: theme.radiusPill
+                color: theme.bgOverlay
+                border.color: searchField.activeFocus ? theme.accent : "transparent"
+                border.width: 1
+
+                Behavior on border.color { ColorAnimation { duration: theme.animFast } }
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: theme.sp12
+                    anchors.rightMargin: theme.sp12
+                    spacing: theme.sp8
+
+                    Label {
+                        text: theme.iconSearch
+                        font.pixelSize: theme.fontBody
+                        color: theme.textMuted
+                    }
+
+                    TextInput {
+                        id: searchField
+                        Layout.fillWidth: true
+                        font.pixelSize: theme.fontSmall
+                        color: theme.textPrimary
+                        clip: true
+                        verticalAlignment: Text.AlignVCenter
+
+                        Text {
+                            anchors.fill: parent
+                            text: "Search vault..."
+                            font: parent.font
+                            color: theme.textMuted
+                            verticalAlignment: Text.AlignVCenter
+                            visible: !parent.text && !parent.activeFocus
+                        }
+                    }
+                }
             }
 
             Item { Layout.fillWidth: true }
 
-            Label {
-                text: fileTreeModel.fileCount + " articles"
-                font.pixelSize: 13
-                color: root.textSubtle
+            // Article count
+            Rectangle {
+                height: 24
+                width: articleCountLabel.width + theme.sp16
+                radius: theme.radiusPill
+                color: theme.bgOverlay
+
+                Label {
+                    id: articleCountLabel
+                    text: fileTreeModel.fileCount + " articles"
+                    font.pixelSize: theme.fontSmall
+                    color: theme.textSecondary
+                    anchors.centerIn: parent
+                }
             }
 
-            ToolButton {
-                text: "⚙"
-                font.pixelSize: 18
-                contentItem: Text {
-                    text: parent.text
-                    font: parent.font
-                    color: root.textSubtle
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+            // Dark/Light toggle
+            Rectangle {
+                width: 32
+                height: 32
+                radius: theme.radiusMedium
+                color: themeToggleBtn.hovered ? theme.bgOverlay : "transparent"
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: theme.darkMode ? theme.iconSun : theme.iconMoon
+                    font.pixelSize: theme.fontSubhead
+                    color: themeToggleBtn.hovered ? theme.accentWarm : theme.textSecondary
+                    anchors.centerIn: parent
+
+                    Behavior on color { ColorAnimation { duration: theme.animFast } }
                 }
-                onClicked: settingsDrawer.open()
+
+                MouseArea {
+                    id: themeToggleBtn
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: theme.darkMode = !theme.darkMode
+
+                    ToolTip.text: theme.darkMode ? "Switch to light mode" : "Switch to dark mode"
+                    ToolTip.visible: themeToggleBtn.containsMouse
+                    ToolTip.delay: 600
+                }
+            }
+
+            // Settings button
+            Rectangle {
+                width: 32
+                height: 32
+                radius: theme.radiusMedium
+                color: settingsBtn.hovered ? theme.bgOverlay : "transparent"
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: theme.iconSettings
+                    font.pixelSize: theme.fontSubhead
+                    color: settingsBtn.hovered ? theme.textPrimary : theme.textSecondary
+                    anchors.centerIn: parent
+
+                    Behavior on color { ColorAnimation { duration: theme.animFast } }
+                }
+
+                MouseArea {
+                    id: settingsBtn
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: settingsDrawer.open()
+                }
             }
         }
     }
@@ -65,53 +166,94 @@ ApplicationWindow {
         anchors.fill: parent
         orientation: Qt.Horizontal
 
-        // Left sidebar — File Browser
+        handle: Rectangle {
+            implicitWidth: 1
+            implicitHeight: parent.height
+            color: theme.borderSubtle
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: 3
+                height: 32
+                radius: 2
+                color: parent.SplitHandle.hovered ? theme.accent : theme.bgOverlay
+                opacity: parent.SplitHandle.hovered ? 1.0 : 0.6
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+                Behavior on opacity { NumberAnimation { duration: theme.animFast } }
+            }
+        }
+
+        // Left sidebar
         Rectangle {
             SplitView.preferredWidth: 280
             SplitView.minimumWidth: 200
             SplitView.maximumWidth: 500
-            color: root.bgSurface
+            color: theme.bgSurface
 
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: 0
                 spacing: 0
 
                 // Sidebar header
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 40
-                    color: root.bgOverlay
+                    Layout.preferredHeight: theme.sp40
+                    color: theme.bgSurface2
 
                     RowLayout {
                         anchors.fill: parent
-                        anchors.leftMargin: 12
-                        anchors.rightMargin: 12
+                        anchors.leftMargin: theme.sp12
+                        anchors.rightMargin: theme.sp8
+                        spacing: theme.sp8
 
                         Label {
                             text: "Vault"
-                            font.pixelSize: 14
-                            font.bold: true
-                            color: root.textColor
+                            font.pixelSize: theme.fontBody
+                            font.weight: Font.DemiBold
+                            color: theme.textPrimary
                         }
 
                         Item { Layout.fillWidth: true }
 
-                        ToolButton {
-                            text: "↻"
-                            font.pixelSize: 14
-                            contentItem: Text {
-                                text: parent.text
-                                font: parent.font
-                                color: root.textSubtle
-                                horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
+                        // Refresh button
+                        Rectangle {
+                            width: 28
+                            height: 28
+                            radius: theme.radiusSmall
+                            color: refreshBtn.hovered ? theme.bgOverlay : "transparent"
+
+                            Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                            Label {
+                                text: theme.iconRefresh
+                                font.pixelSize: theme.fontBody
+                                color: refreshBtn.hovered ? theme.textPrimary : theme.textSecondary
+                                anchors.centerIn: parent
+
+                                Behavior on color { ColorAnimation { duration: theme.animFast } }
                             }
-                            onClicked: fileTreeModel.refresh()
-                            ToolTip.text: "Refresh"
-                            ToolTip.visible: hovered
+
+                            MouseArea {
+                                id: refreshBtn
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: fileTreeModel.refresh()
+
+                                ToolTip.text: "Refresh"
+                                ToolTip.visible: refreshBtn.containsMouse
+                                ToolTip.delay: 600
+                            }
                         }
                     }
+                }
+
+                // Separator
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: theme.borderSubtle
                 }
 
                 // File browser
@@ -125,10 +267,10 @@ ApplicationWindow {
             }
         }
 
-        // Right content area — Article View
+        // Right content area
         Rectangle {
             SplitView.fillWidth: true
-            color: root.bgBase
+            color: theme.bgBase
 
             ArticleView {
                 anchors.fill: parent
@@ -139,53 +281,116 @@ ApplicationWindow {
     // Empty state overlay
     Rectangle {
         anchors.centerIn: parent
-        width: 400
-        height: 300
+        width: 420
+        height: 340
         color: "transparent"
         visible: !articleModel.loaded && fileTreeModel.fileCount === 0
+        opacity: visible ? 1.0 : 0.0
+
+        Behavior on opacity { NumberAnimation { duration: theme.animSlow } }
 
         Column {
             anchors.centerIn: parent
-            spacing: 16
+            spacing: theme.sp16
 
+            // Animated hex icon
             Label {
-                text: "⬡"
-                font.pixelSize: 64
-                color: root.accentColor
+                text: theme.iconHex
+                font.pixelSize: theme.fontHero
+                color: theme.accent
                 anchors.horizontalCenter: parent.horizontalCenter
+                opacity: 0.8
+
+                SequentialAnimation on opacity {
+                    loops: Animation.Infinite
+                    NumberAnimation { to: 1.0; duration: 2000; easing.type: Easing.InOutSine }
+                    NumberAnimation { to: 0.5; duration: 2000; easing.type: Easing.InOutSine }
+                }
             }
 
             Label {
                 text: "Welcome to Arkive"
-                font.pixelSize: 24
-                font.bold: true
-                color: root.textColor
+                font.pixelSize: theme.fontTitle
+                font.weight: Font.Bold
+                color: theme.textPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 text: "Your vault is empty. Import data to get started."
-                font.pixelSize: 14
-                color: root.textSubtle
+                font.pixelSize: theme.fontBody
+                color: theme.textSecondary
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Button {
-                text: "Import Data..."
+            Item { height: theme.sp8; width: 1 }
+
+            // Steps
+            Column {
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 14
-                contentItem: Text {
-                    text: parent.text
-                    font: parent.font
-                    color: root.bgBase
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                spacing: theme.sp8
+
+                Repeater {
+                    model: [
+                        { num: "1", label: "Set your vault path in Settings" },
+                        { num: "2", label: "Import photos, messages, or notes" },
+                        { num: "3", label: "Browse your personal wiki" }
+                    ]
+
+                    Row {
+                        spacing: theme.sp12
+
+                        Rectangle {
+                            width: 24; height: 24
+                            radius: theme.radiusPill
+                            color: theme.bgOverlay
+
+                            Label {
+                                text: modelData.num
+                                font.pixelSize: theme.fontSmall
+                                font.weight: Font.DemiBold
+                                color: theme.accent
+                                anchors.centerIn: parent
+                            }
+                        }
+
+                        Label {
+                            text: modelData.label
+                            font.pixelSize: theme.fontSmall
+                            color: theme.textSecondary
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
                 }
-                background: Rectangle {
-                    color: parent.hovered ? Qt.lighter(root.accentColor, 1.1) : root.accentColor
-                    radius: 6
-                    implicitWidth: 140
-                    implicitHeight: 36
+            }
+
+            Item { height: theme.sp8; width: 1 }
+
+            // CTA button
+            Rectangle {
+                width: 160
+                height: 40
+                radius: theme.radiusMedium
+                color: importBtnArea.pressed ? Qt.darker(theme.accent, 1.15)
+                     : importBtnArea.containsMouse ? theme.accentHover
+                     : theme.accent
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: "Import Data..."
+                    font.pixelSize: theme.fontBody
+                    font.weight: Font.DemiBold
+                    color: theme.bgBase
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    id: importBtnArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
                 }
             }
         }
@@ -194,14 +399,25 @@ ApplicationWindow {
     // Settings drawer
     Drawer {
         id: settingsDrawer
-        width: 350
+        width: 360
         height: root.height
         edge: Qt.RightEdge
+        modal: true
+        dim: true
 
-        background: Rectangle { color: root.bgSurface }
+        background: Rectangle {
+            color: theme.bgSurface
+            Rectangle {
+                width: 1
+                height: parent.height
+                color: theme.borderSubtle
+                anchors.left: parent.left
+            }
+        }
 
         SettingsPanel {
             anchors.fill: parent
+            onCloseRequested: settingsDrawer.close()
         }
     }
 }

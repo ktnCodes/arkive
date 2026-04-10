@@ -5,185 +5,511 @@ import QtQuick.Layouts
 ColumnLayout {
     spacing: 0
 
+    signal closeRequested()
+
     // Header
     Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 48
-        color: bgOverlay
+        Layout.preferredHeight: theme.sp48
+        color: theme.bgSurface2
 
-        Label {
-            text: "Settings"
-            font.pixelSize: 16
-            font.bold: true
-            color: textColor
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 16
+        RowLayout {
+            anchors.fill: parent
+            anchors.leftMargin: theme.sp16
+            anchors.rightMargin: theme.sp8
+
+            Label {
+                text: theme.iconSettings + "  Settings"
+                font.pixelSize: theme.fontSubhead
+                font.weight: Font.DemiBold
+                color: theme.textPrimary
+            }
+
+            Item { Layout.fillWidth: true }
+
+            Rectangle {
+                width: 28; height: 28
+                radius: theme.radiusSmall
+                color: closeBtnArea.containsMouse ? theme.bgOverlay : "transparent"
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: "\u2715"
+                    font.pixelSize: theme.fontBody
+                    color: closeBtnArea.containsMouse ? theme.textPrimary : theme.textMuted
+                    anchors.centerIn: parent
+
+                    Behavior on color { ColorAnimation { duration: theme.animFast } }
+                }
+
+                MouseArea {
+                    id: closeBtnArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: closeRequested()
+                }
+            }
         }
     }
 
-    ScrollView {
+    Rectangle {
+        Layout.fillWidth: true
+        height: 1
+        color: theme.borderSubtle
+    }
+
+    Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
+        contentHeight: settingsContent.height
+        clip: true
+        boundsBehavior: Flickable.StopAtBounds
+
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+            contentItem: Rectangle {
+                implicitWidth: 4
+                radius: 2
+                color: parent.hovered ? theme.textMuted : theme.bgOverlay
+                opacity: parent.active ? 1.0 : 0.0
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+                Behavior on opacity { NumberAnimation { duration: theme.animNormal } }
+            }
+        }
 
         ColumnLayout {
+            id: settingsContent
             width: parent.width
-            spacing: 24
-            anchors.margins: 16
+            spacing: theme.sp4
 
-            // Vault info section
-            GroupBox {
+            // ─── Appearance Section ───
+            Item { height: theme.sp16; Layout.fillWidth: true }
+
+            Label {
+                text: "APPEARANCE"
+                font.pixelSize: theme.fontCaption
+                font.weight: Font.DemiBold
+                font.letterSpacing: 1.2
+                color: theme.textMuted
+                Layout.leftMargin: theme.sp16
+            }
+
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.margins: 16
+                Layout.leftMargin: theme.sp12
+                Layout.rightMargin: theme.sp12
+                Layout.topMargin: theme.sp8
+                height: theme.sp48
+                radius: theme.radiusMedium
+                color: theme.bgSurface2
+                border.color: theme.borderSubtle
+                border.width: 1
 
-                label: Label {
-                    text: "Vault"
-                    font.pixelSize: 14
-                    font.bold: true
-                    color: textColor
-                }
-
-                background: Rectangle {
-                    color: bgSurface
-                    border.color: borderColor
-                    radius: 8
-                    y: parent.label.height / 2
-                    height: parent.height - y
-                }
-
-                ColumnLayout {
+                RowLayout {
                     anchors.fill: parent
-                    spacing: 8
+                    anchors.leftMargin: theme.sp12
+                    anchors.rightMargin: theme.sp12
+                    spacing: theme.sp8
 
                     Label {
-                        text: "Path: " + vaultManager.vaultPath
-                        font.pixelSize: 12
-                        color: textSubtle
-                        wrapMode: Text.WrapAnywhere
+                        text: "Theme"
+                        font.pixelSize: theme.fontSmall
+                        font.weight: Font.DemiBold
+                        color: theme.textSecondary
+                    }
+
+                    Item { Layout.fillWidth: true }
+
+                    // Toggle pill
+                    Rectangle {
+                        width: 52
+                        height: 28
+                        radius: theme.radiusPill
+                        color: theme.darkMode ? theme.bgOverlay : theme.accentWarm
+                        border.color: theme.darkMode ? theme.border : Qt.darker(theme.accentWarm, 1.2)
+                        border.width: 1
+
+                        Behavior on color { ColorAnimation { duration: theme.animNormal } }
+
+                        Rectangle {
+                            id: toggleKnob
+                            width: 22
+                            height: 22
+                            radius: 11
+                            color: theme.textPrimary
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: theme.darkMode ? parent.width - width - 3 : 3
+
+                            Behavior on x { NumberAnimation { duration: theme.animNormal; easing.type: Easing.InOutCubic } }
+
+                            Label {
+                                text: theme.darkMode ? theme.iconMoon : theme.iconSun
+                                font.pixelSize: 12
+                                color: theme.darkMode ? "#1e1e2e" : "#4c4f69"
+                                anchors.centerIn: parent
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: theme.darkMode = !theme.darkMode
+                        }
                     }
 
                     Label {
-                        text: "Articles: " + fileTreeModel.fileCount
-                        font.pixelSize: 12
-                        color: textSubtle
+                        text: theme.darkMode ? "Dark" : "Light"
+                        font.pixelSize: theme.fontSmall
+                        color: theme.textSecondary
+                        Layout.preferredWidth: 32
                     }
                 }
             }
 
-            // LLM Settings section (placeholder for Phase 3)
-            GroupBox {
+            // ─── Vault Section ───
+            Item { height: theme.sp24; Layout.fillWidth: true }
+
+            Label {
+                text: "VAULT"
+                font.pixelSize: theme.fontCaption
+                font.weight: Font.DemiBold
+                font.letterSpacing: 1.2
+                color: theme.textMuted
+                Layout.leftMargin: theme.sp16
+            }
+
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.margins: 16
-
-                label: Label {
-                    text: "LLM Provider"
-                    font.pixelSize: 14
-                    font.bold: true
-                    color: textColor
-                }
-
-                background: Rectangle {
-                    color: bgSurface
-                    border.color: borderColor
-                    radius: 8
-                    y: parent.label.height / 2
-                    height: parent.height - y
-                }
+                Layout.leftMargin: theme.sp12
+                Layout.rightMargin: theme.sp12
+                Layout.topMargin: theme.sp8
+                height: vaultInfoCol.height + theme.sp24
+                radius: theme.radiusMedium
+                color: theme.bgSurface2
+                border.color: theme.borderSubtle
+                border.width: 1
 
                 ColumnLayout {
-                    anchors.fill: parent
-                    spacing: 12
+                    id: vaultInfoCol
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.margins: theme.sp12
+                    spacing: theme.sp8
 
                     RowLayout {
-                        spacing: 8
+                        spacing: theme.sp8
+                        Label {
+                            text: "Path"
+                            font.pixelSize: theme.fontSmall
+                            font.weight: Font.DemiBold
+                            color: theme.textSecondary
+                            Layout.preferredWidth: 56
+                        }
+                        Label {
+                            text: vaultManager.vaultPath
+                            font.pixelSize: theme.fontSmall
+                            color: theme.textPrimary
+                            wrapMode: Text.WrapAnywhere
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: theme.sp8
+                        Label {
+                            text: "Articles"
+                            font.pixelSize: theme.fontSmall
+                            font.weight: Font.DemiBold
+                            color: theme.textSecondary
+                            Layout.preferredWidth: 56
+                        }
+                        Label {
+                            text: fileTreeModel.fileCount
+                            font.pixelSize: theme.fontSmall
+                            color: theme.textPrimary
+                        }
+                    }
+                }
+            }
+
+            // ─── LLM Section ───
+            Item { height: theme.sp24; Layout.fillWidth: true }
+
+            Label {
+                text: "LLM PROVIDER"
+                font.pixelSize: theme.fontCaption
+                font.weight: Font.DemiBold
+                font.letterSpacing: 1.2
+                color: theme.textMuted
+                Layout.leftMargin: theme.sp16
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.leftMargin: theme.sp12
+                Layout.rightMargin: theme.sp12
+                Layout.topMargin: theme.sp8
+                height: llmCol.height + theme.sp24
+                radius: theme.radiusMedium
+                color: theme.bgSurface2
+                border.color: theme.borderSubtle
+                border.width: 1
+
+                ColumnLayout {
+                    id: llmCol
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.margins: theme.sp12
+                    spacing: theme.sp4
+
+                    // Local option
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: 36
+                        radius: theme.radiusSmall
+                        color: localRadio.checked ? theme.bgOverlay : "transparent"
+
+                        Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.leftMargin: theme.sp8
+                            anchors.rightMargin: theme.sp8
+                            spacing: theme.sp8
+
+                            Rectangle {
+                                width: 16; height: 16
+                                radius: 8
+                                border.color: localRadio.checked ? theme.accent : theme.textMuted
+                                border.width: 1.5
+                                color: "transparent"
+
+                                Rectangle {
+                                    width: 8; height: 8; radius: 4
+                                    color: theme.accent
+                                    anchors.centerIn: parent
+                                    visible: localRadio.checked
+                                    scale: localRadio.checked ? 1.0 : 0.0
+
+                                    Behavior on scale { NumberAnimation { duration: theme.animFast } }
+                                }
+                            }
+
+                            Label {
+                                text: "Local (llama.cpp)"
+                                font.pixelSize: theme.fontSmall
+                                color: theme.textPrimary
+                                Layout.fillWidth: true
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: localRadio.checked = true
+                        }
+
                         RadioButton {
                             id: localRadio
-                            text: "Local (llama.cpp)"
                             checked: true
-                            contentItem: Text {
-                                text: parent.text
-                                font.pixelSize: 13
-                                color: textColor
-                                leftPadding: parent.indicator.width + 8
-                                verticalAlignment: Text.AlignVCenter
-                            }
+                            visible: false
                         }
                     }
 
-                    RowLayout {
-                        spacing: 8
+                    // Cloud option
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: 36
+                        radius: theme.radiusSmall
+                        color: cloudRadio.checked ? theme.bgOverlay : "transparent"
+
+                        Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.leftMargin: theme.sp8
+                            anchors.rightMargin: theme.sp8
+                            spacing: theme.sp8
+
+                            Rectangle {
+                                width: 16; height: 16
+                                radius: 8
+                                border.color: cloudRadio.checked ? theme.accent : theme.textMuted
+                                border.width: 1.5
+                                color: "transparent"
+
+                                Rectangle {
+                                    width: 8; height: 8; radius: 4
+                                    color: theme.accent
+                                    anchors.centerIn: parent
+                                    visible: cloudRadio.checked
+                                    scale: cloudRadio.checked ? 1.0 : 0.0
+
+                                    Behavior on scale { NumberAnimation { duration: theme.animFast } }
+                                }
+                            }
+
+                            Label {
+                                text: "Cloud (Claude / OpenAI)"
+                                font.pixelSize: theme.fontSmall
+                                color: theme.textPrimary
+                                Layout.fillWidth: true
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: cloudRadio.checked = true
+                        }
+
                         RadioButton {
-                            text: "Cloud (Claude / OpenAI)"
-                            contentItem: Text {
-                                text: parent.text
-                                font.pixelSize: 13
-                                color: textColor
-                                leftPadding: parent.indicator.width + 8
-                                verticalAlignment: Text.AlignVCenter
-                            }
+                            id: cloudRadio
+                            visible: false
                         }
                     }
 
-                    Label {
-                        text: "⚠ LLM integration available in Phase 3"
-                        font.pixelSize: 11
-                        font.italic: true
-                        color: textSubtle
+                    Item { height: theme.sp4; Layout.fillWidth: true }
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: phaseLabel.height + theme.sp12
+                        radius: theme.radiusSmall
+                        color: theme.bgOverlay
+                        opacity: 0.6
+
+                        Label {
+                            id: phaseLabel
+                            text: "LLM integration available in Phase 3"
+                            font.pixelSize: theme.fontCaption
+                            font.italic: true
+                            color: theme.accentWarm
+                            anchors.centerIn: parent
+                        }
                     }
                 }
             }
 
-            // Import section (placeholder for Phase 2)
-            GroupBox {
+            // ─── Data Sources Section ───
+            Item { height: theme.sp24; Layout.fillWidth: true }
+
+            Label {
+                text: "DATA SOURCES"
+                font.pixelSize: theme.fontCaption
+                font.weight: Font.DemiBold
+                font.letterSpacing: 1.2
+                color: theme.textMuted
+                Layout.leftMargin: theme.sp16
+            }
+
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.margins: 16
-
-                label: Label {
-                    text: "Data Sources"
-                    font.pixelSize: 14
-                    font.bold: true
-                    color: textColor
-                }
-
-                background: Rectangle {
-                    color: bgSurface
-                    border.color: borderColor
-                    radius: 8
-                    y: parent.label.height / 2
-                    height: parent.height - y
-                }
+                Layout.leftMargin: theme.sp12
+                Layout.rightMargin: theme.sp12
+                Layout.topMargin: theme.sp8
+                height: sourcesCol.height + theme.sp24
+                radius: theme.radiusMedium
+                color: theme.bgSurface2
+                border.color: theme.borderSubtle
+                border.width: 1
 
                 ColumnLayout {
-                    anchors.fill: parent
-                    spacing: 8
+                    id: sourcesCol
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.margins: theme.sp12
+                    spacing: theme.sp4
 
-                    Label { text: "📷 Photos (EXIF)"; font.pixelSize: 13; color: textSubtle }
-                    Label { text: "💬 iMessages (chat.db)"; font.pixelSize: 13; color: textSubtle }
-                    Label { text: "👻 Snapchat (JSON export)"; font.pixelSize: 13; color: textSubtle }
+                    Repeater {
+                        model: [
+                            { icon: theme.iconPhoto, label: "Photos (EXIF)", enabled: false },
+                            { icon: theme.iconChat,  label: "iMessages (chat.db)", enabled: false },
+                            { icon: theme.iconSnap,  label: "Snapchat (JSON export)", enabled: false }
+                        ]
 
-                    Label {
-                        text: "⚠ Import available in Phase 2"
-                        font.pixelSize: 11
-                        font.italic: true
-                        color: textSubtle
+                        Rectangle {
+                            Layout.fillWidth: true
+                            height: 36
+                            radius: theme.radiusSmall
+                            color: sourceArea.containsMouse ? theme.bgOverlay : "transparent"
+
+                            Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.leftMargin: theme.sp8
+                                anchors.rightMargin: theme.sp8
+                                spacing: theme.sp8
+
+                                Label {
+                                    text: modelData.icon
+                                    font.pixelSize: theme.fontBody
+                                    color: theme.textMuted
+                                    Layout.preferredWidth: 20
+                                    horizontalAlignment: Text.AlignHCenter
+                                }
+
+                                Label {
+                                    text: modelData.label
+                                    font.pixelSize: theme.fontSmall
+                                    color: theme.textSecondary
+                                    Layout.fillWidth: true
+                                }
+
+                                // Status pill
+                                Rectangle {
+                                    width: statusText.width + theme.sp12
+                                    height: 20
+                                    radius: theme.radiusPill
+                                    color: theme.bgOverlay
+
+                                    Label {
+                                        id: statusText
+                                        text: "Phase 2"
+                                        font.pixelSize: theme.fontCaption
+                                        color: theme.textMuted
+                                        anchors.centerIn: parent
+                                    }
+                                }
+                            }
+
+                            MouseArea {
+                                id: sourceArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                            }
+                        }
                     }
                 }
             }
 
-            // About
-            Label {
-                text: "Arkive v0.1.0"
-                font.pixelSize: 11
-                color: textSubtle
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 16
-            }
+            // ─── About ───
+            Item { height: theme.sp32; Layout.fillWidth: true }
 
-            Label {
-                text: "Your life wiki. Local-only."
-                font.pixelSize: 11
-                color: textSubtle
+            Column {
                 Layout.alignment: Qt.AlignHCenter
+                spacing: theme.sp4
+
+                Label {
+                    text: "Arkive v0.1.0"
+                    font.pixelSize: theme.fontCaption
+                    color: theme.textMuted
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Label {
+                    text: "Your life wiki. Local-only."
+                    font.pixelSize: theme.fontCaption
+                    color: theme.textMuted
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    opacity: 0.6
+                }
             }
 
             Item { Layout.fillHeight: true }

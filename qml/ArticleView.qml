@@ -6,144 +6,211 @@ Item {
     id: articleView
 
     // No article loaded state
-    Label {
+    Column {
         anchors.centerIn: parent
-        text: "Select an article from the sidebar"
-        font.pixelSize: 16
-        color: textSubtle
+        spacing: theme.sp12
         visible: !articleModel.loaded
+        opacity: visible ? 1.0 : 0.0
+
+        Behavior on opacity { NumberAnimation { duration: theme.animNormal } }
+
+        Label {
+            text: theme.iconMarkdown
+            font.pixelSize: theme.fontHero
+            color: theme.textMuted
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: 0.3
+        }
+
+        Label {
+            text: "Select an article from the sidebar"
+            font.pixelSize: theme.fontSubhead
+            color: theme.textMuted
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
 
     // Article content
     ScrollView {
         anchors.fill: parent
-        anchors.margins: 24
         visible: articleModel.loaded
         clip: true
 
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+            contentItem: Rectangle {
+                implicitWidth: 4
+                radius: 2
+                color: parent.hovered ? theme.textMuted : theme.bgOverlay
+                opacity: parent.active ? 1.0 : 0.0
 
-        ColumnLayout {
-            width: articleView.width - 48
-            spacing: 16
-
-            // Title
-            Label {
-                text: articleModel.title
-                font.pixelSize: 28
-                font.bold: true
-                color: textColor
-                wrapMode: Text.Wrap
-                Layout.fillWidth: true
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+                Behavior on opacity { NumberAnimation { duration: theme.animNormal } }
             }
+        }
 
-            // Backlinks bar
-            Flow {
-                Layout.fillWidth: true
-                spacing: 8
-                visible: articleModel.backlinks.length > 0
+        Flickable {
+            contentWidth: parent.width
+            contentHeight: contentCol.height
 
+            ColumnLayout {
+                id: contentCol
+                width: Math.min(parent.width - theme.sp48 * 2, 720)
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: theme.sp32
+                spacing: theme.sp16
+
+                // Title
                 Label {
-                    text: "Links:"
-                    font.pixelSize: 12
-                    color: textSubtle
+                    text: articleModel.title
+                    font.pixelSize: theme.fontDisplay
+                    font.weight: Font.Bold
+                    color: theme.textPrimary
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    lineHeight: 1.2
                 }
 
-                Repeater {
-                    model: articleModel.backlinks
-
-                    Rectangle {
-                        width: backlinkLabel.width + 16
-                        height: 24
-                        radius: 12
-                        color: bgOverlay
-
-                        Label {
-                            id: backlinkLabel
-                            text: modelData
-                            font.pixelSize: 12
-                            color: accentColor
-                            anchors.centerIn: parent
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                // Navigate to linked article
-                                console.log("Navigate to:", modelData)
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Separator
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: borderColor
-            }
-
-            // Rendered HTML content
-            Text {
-                text: articleModel.htmlContent
-                textFormat: Text.RichText
-                wrapMode: Text.Wrap
-                color: textColor
-                font.pixelSize: 15
-                lineHeight: 1.6
-                Layout.fillWidth: true
-
-                onLinkActivated: function(link) {
-                    // Handle backlink clicks
-                    console.log("Link clicked:", link)
-                }
-            }
-
-            // Section headings (table of contents)
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.topMargin: 16
-                height: tocColumn.height + 24
-                color: bgSurface
-                radius: 8
-                visible: articleModel.sectionHeadings.length > 1
-
-                ColumnLayout {
-                    id: tocColumn
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.margins: 12
-                    spacing: 4
+                // Backlinks bar
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: theme.sp8
+                    visible: articleModel.backlinks.length > 0
 
                     Label {
-                        text: "Sections"
-                        font.pixelSize: 12
-                        font.bold: true
-                        color: textSubtle
+                        text: theme.iconLink + " Links"
+                        font.pixelSize: theme.fontSmall
+                        font.weight: Font.DemiBold
+                        color: theme.textMuted
+                        height: 28
+                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Repeater {
-                        model: articleModel.sectionHeadings
+                        model: articleModel.backlinks
 
-                        Label {
-                            text: "• " + modelData
-                            font.pixelSize: 13
-                            color: accentColor
+                        Rectangle {
+                            width: backlinkLabel.width + theme.sp16
+                            height: 28
+                            radius: theme.radiusPill
+                            color: backlinkArea.containsMouse ? theme.bgOverlay : theme.bgSurface
+                            border.color: backlinkArea.containsMouse ? theme.accent : theme.borderSubtle
+                            border.width: 1
+
+                            Behavior on color { ColorAnimation { duration: theme.animFast } }
+                            Behavior on border.color { ColorAnimation { duration: theme.animFast } }
+
+                            Label {
+                                id: backlinkLabel
+                                text: modelData
+                                font.pixelSize: theme.fontSmall
+                                color: theme.accent
+                                anchors.centerIn: parent
+                            }
 
                             MouseArea {
+                                id: backlinkArea
                                 anchors.fill: parent
+                                hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    console.log("Navigate to:", modelData)
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            // Bottom spacer
-            Item { Layout.preferredHeight: 24 }
+                // Separator
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: theme.borderSubtle
+                }
+
+                // Rendered HTML content
+                Text {
+                    text: articleModel.htmlContent
+                    textFormat: Text.RichText
+                    wrapMode: Text.Wrap
+                    color: theme.textPrimary
+                    font.pixelSize: 15
+                    lineHeight: 1.7
+                    Layout.fillWidth: true
+
+                    onLinkActivated: function(link) {
+                        console.log("Link clicked:", link)
+                    }
+                }
+
+                // Table of contents
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.topMargin: theme.sp16
+                    height: tocColumn.height + theme.sp24
+                    color: theme.bgSurface
+                    radius: theme.radiusMedium
+                    border.color: theme.borderSubtle
+                    border.width: 1
+                    visible: articleModel.sectionHeadings.length > 1
+
+                    ColumnLayout {
+                        id: tocColumn
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.margins: theme.sp12
+                        spacing: theme.sp4
+
+                        Label {
+                            text: "On this page"
+                            font.pixelSize: theme.fontSmall
+                            font.weight: Font.DemiBold
+                            color: theme.textMuted
+                            Layout.bottomMargin: theme.sp4
+                        }
+
+                        Repeater {
+                            model: articleModel.sectionHeadings
+
+                            Item {
+                                Layout.fillWidth: true
+                                height: 28
+
+                                Rectangle {
+                                    anchors.fill: parent
+                                    radius: theme.radiusSmall
+                                    color: tocItemArea.containsMouse ? theme.bgSurface2 : "transparent"
+
+                                    Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                                    Label {
+                                        text: modelData
+                                        font.pixelSize: theme.fontSmall
+                                        color: tocItemArea.containsMouse ? theme.accent : theme.textSecondary
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: theme.sp8
+
+                                        Behavior on color { ColorAnimation { duration: theme.animFast } }
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: tocItemArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Bottom spacer
+                Item { Layout.preferredHeight: theme.sp48 }
+            }
         }
     }
 }
