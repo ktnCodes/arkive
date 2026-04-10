@@ -5,15 +5,15 @@
 #include <QFileSystemWatcher>
 #include <QDir>
 #include <QFileInfo>
-#include <QVector>
 #include <memory>
+#include <vector>
 
 struct TreeNode {
     QString name;
     QString fullPath;
     bool isDir;
     TreeNode *parent = nullptr;
-    QVector<std::unique_ptr<TreeNode>> children;
+    std::vector<std::unique_ptr<TreeNode>> children;
     int row = 0;
 };
 

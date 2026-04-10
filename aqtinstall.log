@@ -1,0 +1,34 @@
+2026-04-10 02:48:44,578 - aqt.helper - DEBUG - helper 13796 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt6_683/qt6_683/Updates.xml.sha256
+2026-04-10 02:49:48,052 - aqt.main - INFO - installer 44620 aqtinstall(aqt) v3.3.0 on Python 3.13.12 [CPython MSC v.1944 64 bit (AMD64)]
+2026-04-10 02:49:48,052 - aqt.helper - DEBUG - helper 44620 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw1310/Updates.xml.sha256
+2026-04-10 02:49:49,579 - aqt.helper - DEBUG - helper 44620 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw1310/Updates.xml.sha256
+2026-04-10 02:49:51,485 - aqt.helper - DEBUG - helper 49216 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw1310/qt.tools.win64_mingw1310/13.1.0-202407240918mingw1310.7z.sha256
+2026-04-10 02:49:52,233 - aqt.helper - INFO - helper 49216 Downloading qt.tools.win64_mingw1310...
+2026-04-10 02:49:52,233 - aqt.installer - DEBUG - installer 49216 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw1310/qt.tools.win64_mingw1310/13.1.0-202407240918mingw1310.7z
+2026-04-10 02:49:52,976 - aqt.helper - DEBUG - helper 49216 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_mingw1310/qt.tools.win64_mingw1310/13.1.0-202407240918mingw1310.7z
+2026-04-10 02:49:52,976 - aqt.helper - INFO - helper 49216 Redirected: qt.mirror.constant.com
+2026-04-10 02:50:12,069 - aqt.installer - INFO - installer 49216 Finished installation of mingw1310.7z in 20.58597380
+2026-04-10 02:50:12,127 - aqt.main - INFO - installer 44620 Finished installation
+2026-04-10 02:50:12,127 - aqt.main - INFO - installer 44620 Time elapsed: 24.07530100 second
+2026-04-10 02:50:20,242 - aqt.main - INFO - installer 43536 aqtinstall(aqt) v3.3.0 on Python 3.13.12 [CPython MSC v.1944 64 bit (AMD64)]
+2026-04-10 02:50:20,242 - aqt.helper - DEBUG - helper 43536 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_cmake/Updates.xml.sha256
+2026-04-10 02:50:21,745 - aqt.helper - DEBUG - helper 43536 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_cmake/Updates.xml.sha256
+2026-04-10 02:50:23,654 - aqt.helper - DEBUG - helper 31772 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_cmake/qt.tools.cmake/3.30.5-202502251255windows64_x64_cmake_tools.7z.sha256
+2026-04-10 02:50:24,406 - aqt.helper - INFO - helper 31772 Downloading qt.tools.cmake...
+2026-04-10 02:50:24,406 - aqt.installer - DEBUG - installer 31772 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_cmake/qt.tools.cmake/3.30.5-202502251255windows64_x64_cmake_tools.7z
+2026-04-10 02:50:25,137 - aqt.helper - DEBUG - helper 31772 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_cmake/qt.tools.cmake/3.30.5-202502251255windows64_x64_cmake_tools.7z
+2026-04-10 02:50:25,137 - aqt.helper - INFO - helper 31772 Redirected: qt.mirror.constant.com
+2026-04-10 02:50:31,573 - aqt.installer - INFO - installer 31772 Finished installation of windows64_x64_cmake_tools.7z in 7.92070640
+2026-04-10 02:50:31,619 - aqt.main - INFO - installer 43536 Finished installation
+2026-04-10 02:50:31,619 - aqt.main - INFO - installer 43536 Time elapsed: 11.37771660 second
+2026-04-10 02:50:31,974 - aqt.main - INFO - installer 3452 aqtinstall(aqt) v3.3.0 on Python 3.13.12 [CPython MSC v.1944 64 bit (AMD64)]
+2026-04-10 02:50:31,974 - aqt.helper - DEBUG - helper 3452 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_ninja/Updates.xml.sha256
+2026-04-10 02:50:33,495 - aqt.helper - DEBUG - helper 3452 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_ninja/Updates.xml.sha256
+2026-04-10 02:50:35,422 - aqt.helper - DEBUG - helper 36660 Attempt to download checksum at https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_ninja/qt.tools.ninja/1.12.1-202502251256ninja_win64.7z.sha256
+2026-04-10 02:50:36,179 - aqt.helper - INFO - helper 36660 Downloading qt.tools.ninja...
+2026-04-10 02:50:36,180 - aqt.installer - DEBUG - installer 36660 Download URL: https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_ninja/qt.tools.ninja/1.12.1-202502251256ninja_win64.7z
+2026-04-10 02:50:36,929 - aqt.helper - DEBUG - helper 36660 Asked to redirect(302) to: https://qt.mirror.constant.com/online/qtsdkrepository/windows_x86/desktop/tools_ninja/qt.tools.ninja/1.12.1-202502251256ninja_win64.7z
+2026-04-10 02:50:36,929 - aqt.helper - INFO - helper 36660 Redirected: qt.mirror.constant.com
+2026-04-10 02:50:37,565 - aqt.installer - INFO - installer 36660 Finished installation of ninja_win64.7z in 2.14447780
+2026-04-10 02:50:37,600 - aqt.main - INFO - installer 3452 Finished installation
+2026-04-10 02:50:37,601 - aqt.main - INFO - installer 3452 Time elapsed: 5.62675220 second

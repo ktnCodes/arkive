@@ -71,7 +71,7 @@ void FileTreeModel::buildTree(TreeNode *parentNode, const QDir &dir)
         node->fullPath = info.absoluteFilePath();
         node->isDir = info.isDir();
         node->parent = parentNode;
-        node->row = parentNode->children.size();
+        node->row = static_cast<int>(parentNode->children.size());
 
         if (info.isDir()) {
             buildTree(node.get(), QDir(info.absoluteFilePath()));
@@ -115,7 +115,7 @@ QModelIndex FileTreeModel::index(int row, int column, const QModelIndex &parent)
         return QModelIndex();
 
     TreeNode *parentNode = nodeFromIndex(parent);
-    if (!parentNode || row < 0 || row >= parentNode->children.size())
+    if (!parentNode || row < 0 || row >= static_cast<int>(parentNode->children.size()))
         return QModelIndex();
 
     return createIndex(row, column, parentNode->children[row].get());
@@ -139,7 +139,7 @@ int FileTreeModel::rowCount(const QModelIndex &parent) const
         return 0;
 
     TreeNode *node = nodeFromIndex(parent);
-    return node ? node->children.size() : 0;
+    return node ? static_cast<int>(node->children.size()) : 0;
 }
 
 int FileTreeModel::columnCount(const QModelIndex &) const

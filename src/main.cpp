@@ -8,6 +8,9 @@
 
 int main(int argc, char *argv[])
 {
+    // Use Basic style for full customization support
+    qputenv("QT_QUICK_CONTROLS_STYLE", "Basic");
+
     QGuiApplication app(argc, argv);
     app.setApplicationName("Arkive");
     app.setOrganizationName("Arkive");
@@ -32,7 +35,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("articleModel", &articleModel);
 
     // Load main QML
-    const QUrl url(u"qrc:/Arkive/qml/Main.qml"_qs);
+    using namespace Qt::StringLiterals;
+    const QUrl url(u"qrc:/qt/qml/Arkive/qml/Main.qml"_s);
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreationFailed,
         &app, []() { QCoreApplication::exit(-1); },

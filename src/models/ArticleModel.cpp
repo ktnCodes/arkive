@@ -2,6 +2,7 @@
 #include "core/MarkdownParser.h"
 
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QDebug>
 
