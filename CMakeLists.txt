@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.21)
 
 project(Arkive VERSION 0.1.0 LANGUAGES CXX)
 
+# Default to Debug if no build type specified (fixes Qt Creator empty-config warning)
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
@@ -28,6 +33,11 @@ set(CORE_SOURCES
     src/core/MessageIngestor.h
     src/core/SnapchatIngestor.cpp
     src/core/SnapchatIngestor.h
+    src/core/LlmClient.h
+    src/core/CloudLlmClient.cpp
+    src/core/CloudLlmClient.h
+    src/core/WikiCompiler.cpp
+    src/core/WikiCompiler.h
 )
 
 set(MODEL_SOURCES
@@ -55,6 +65,7 @@ qt_add_qml_module(arkive
         qml/ArticleView.qml
         qml/SettingsPanel.qml
         qml/ImportPanel.qml
+        qml/SkillPanel.qml
         qml/Theme.qml
 )
 
@@ -114,6 +125,8 @@ if(BUILD_TESTS)
         tests/test_photo_ingestor.cpp
         tests/test_message_ingestor.cpp
         tests/test_snapchat_ingestor.cpp
+        tests/test_wiki_compiler.cpp
+        tests/test_cloud_llm_client.cpp
         tests/test_index_manager.cpp
         tests/test_file_tree_model.cpp
         tests/test_article_model.cpp

@@ -21,7 +21,9 @@ Item {
         id: folderDialog
         title: "Select a folder of photos"
         onAccepted: {
-            photoIngestor.importFromFolder(importPanel.urlToLocalPath(selectedFolder))
+            var path = importPanel.urlToLocalPath(selectedFolder)
+            console.info("UI: Photo import started from", path)
+            photoIngestor.importFromFolder(path)
         }
     }
 
@@ -30,13 +32,21 @@ Item {
         title: "Select iMessage chat.db"
         fileMode: FileDialog.OpenFile
         nameFilters: ["SQLite database (*.db *.sqlite)", "All files (*)"]
-        onAccepted: messageIngestor.importChatDatabase(importPanel.urlToLocalPath(selectedFile))
+        onAccepted: {
+            var path = importPanel.urlToLocalPath(selectedFile)
+            console.info("UI: iMessage import started from", path)
+            messageIngestor.importChatDatabase(path)
+        }
     }
 
     FolderDialog {
         id: snapchatFolderDialog
         title: "Select the main Snapchat export folder or its parent folder"
-        onAccepted: snapchatIngestor.importExportFolder(importPanel.urlToLocalPath(selectedFolder))
+        onAccepted: {
+            var path = importPanel.urlToLocalPath(selectedFolder)
+            console.info("UI: Snapchat import started from", path)
+            snapchatIngestor.importExportFolder(path)
+        }
     }
 
     ColumnLayout {
@@ -179,7 +189,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: folderDialog.open()
+                            onClicked: {
+                                console.info("UI: Photo folder dialog opened")
+                                folderDialog.open()
+                            }
                         }
                     }
 
@@ -206,7 +219,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: photoIngestor.cancel()
+                            onClicked: {
+                                console.info("UI: Photo import cancel requested")
+                                photoIngestor.cancel()
+                            }
                         }
                     }
                 }
@@ -326,7 +342,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: messageDbDialog.open()
+                            onClicked: {
+                                console.info("UI: iMessage db dialog opened")
+                                messageDbDialog.open()
+                            }
                         }
                     }
 
@@ -352,7 +371,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: messageIngestor.cancel()
+                            onClicked: {
+                                console.info("UI: iMessage import cancel requested")
+                                messageIngestor.cancel()
+                            }
                         }
                     }
                 }
@@ -472,7 +494,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: snapchatFolderDialog.open()
+                            onClicked: {
+                                console.info("UI: Snapchat folder dialog opened")
+                                snapchatFolderDialog.open()
+                            }
                         }
                     }
 
@@ -498,7 +523,10 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: snapchatIngestor.cancel()
+                            onClicked: {
+                                console.info("UI: Snapchat import cancel requested")
+                                snapchatIngestor.cancel()
+                            }
                         }
                     }
                 }

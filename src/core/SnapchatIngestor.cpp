@@ -531,6 +531,8 @@ void SnapchatIngestor::resetImportState()
     m_peopleWritten = 0;
     m_conversationsWritten = 0;
     m_memoriesWritten = 0;
+    m_parsedItemCount = 0;
+    m_currentFileName.clear();
 }
 
 void SnapchatIngestor::parseJsonFile(const QString &filePath)
@@ -547,6 +549,9 @@ void SnapchatIngestor::parseJsonFile(const QString &filePath)
     const QByteArray data = file.readAll();
     file.close();
 
+    m_currentFileName = QFileInfo(filePath).fileName();
+    m_parsedItemCount = 0;
+
     qInfo() << "SnapchatIngestor: parsing" << filePath << "size(bytes)=" << data.size();
 
     QJsonParseError parseError;
@@ -561,17 +566,20 @@ void SnapchatIngestor::parseJsonFile(const QString &filePath)
 
     if (fileName == QStringLiteral("friendsjson")) {
         parseFriendsValue(root, filePath, true);
-        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms";
+        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms"
+                << "items=" << m_parsedItemCount;
         return;
     }
     if (fileName == QStringLiteral("chathistoryjson") || fileName == QStringLiteral("snaphistoryjson")) {
         parseChatsValue(root, filePath, true);
-        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms";
+        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms"
+                << "messages=" << m_parsedItemCount;
         return;
     }
     if (fileName == QStringLiteral("memorieshistoryjson")) {
         parseMemoriesValue(root, filePath, true);
-        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms";
+        qInfo() << "SnapchatIngestor: finished" << filePath << "in" << timer.elapsed() << "ms"
+                << "memories=" << m_parsedItemCount;
     }
 }
 
@@ -773,6 +781,15 @@ void SnapchatIngestor::addConversationMessage(const QString &title, const QStrin
     }
     m_seenChatMessages.insert(signature);
 
+    ++m_parsedItemCount;
+    if (m_parsedItemCount % 500 == 0) {
+        setStatusTextValue(QString("Parsing %1... %2/%3 (%4 messages found)")
+            .arg(m_currentFileName)
+            .arg(m_progress + 1)
+            .arg(m_totalFiles)
+            .arg(m_parsedItemCount));
+    }
+
     const QString slug = "snapchat-chat-" + slugify(resolvedTitle);
     SnapchatConversation &conversation = m_conversations[slug];
     if (conversation.slug.isEmpty()) {
@@ -859,6 +876,15 @@ void SnapchatIngestor::addMemoryEntry(const QString &title, const QString &capti
     }
     m_seenMemories.insert(signature);
 
+    ++m_parsedItemCount;
+    if (m_parsedItemCount % 500 == 0) {
+        setStatusTextValue(QString("Parsing %1... %2/%3 (%4 memories found)")
+            .arg(m_currentFileName)
+            .arg(m_progress + 1)
+            .arg(m_totalFiles)
+            .arg(m_parsedItemCount));
+    }
+
     const QString datePrefix = createdAt.isValid() ? createdAt.date().toString("yyyy-MM-dd") + "-" : QString();
     const QString baseSlug = "snapchat-memory-" + datePrefix + slugify(resolvedTitle.isEmpty() ? sourceFile : resolvedTitle);
     QString resolvedSlug = baseSlug;
@@ -892,6 +918,8 @@ void SnapchatIngestor::addMemoryEntry(const QString &title, const QString &capti
 
 void SnapchatIngestor::writePeopleEntries()
 {
+    setStatusTextValue(QString("Writing %1 people entries...").arg(m_people.size()));
+    qInfo() << "SnapchatIngestor: writing" << m_people.size() << "people entries";
     for (auto it = m_people.begin(); it != m_people.end(); ++it) {
         const QString relativePath = "people/" + it.key() + ".md";
         if (m_vault->writeFile(relativePath, generatePersonMarkdown(it.value()))) {
@@ -902,6 +930,8 @@ void SnapchatIngestor::writePeopleEntries()
 
 void SnapchatIngestor::writeConversationEntries()
 {
+    setStatusTextValue(QString("Writing %1 conversation entries...").arg(m_conversations.size()));
+    qInfo() << "SnapchatIngestor: writing" << m_conversations.size() << "conversation entries";
     for (auto it = m_conversations.begin(); it != m_conversations.end(); ++it) {
         const QString relativePath = "conversations/" + it.key() + ".md";
         if (m_vault->writeFile(relativePath, generateConversationMarkdown(it.value()))) {
@@ -912,6 +942,8 @@ void SnapchatIngestor::writeConversationEntries()
 
 void SnapchatIngestor::writeMemoryEntries()
 {
+    setStatusTextValue(QString("Writing %1 memory entries...").arg(m_memories.size()));
+    qInfo() << "SnapchatIngestor: writing" << m_memories.size() << "memory entries";
     for (const SnapchatMemory &memory : m_memories) {
         const QString relativePath = "memories/" + memory.slug + ".md";
         if (m_vault->writeFile(relativePath, generateMemoryMarkdown(memory))) {

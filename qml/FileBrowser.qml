@@ -132,8 +132,10 @@ Item {
 
                 onClicked: {
                     if (delegate.itemIsDir) {
+                        console.info("UI: Folder toggled:", delegate.itemName)
                         treeView.toggleExpanded(delegate.row)
                     } else if (delegate.isClickable) {
+                        console.info("UI: Article selected:", delegate.itemFullPath)
                         treeView.selectionModel.setCurrentIndex(
                             treeView.index(delegate.row, 0),
                             ItemSelectionModel.ClearAndSelect)

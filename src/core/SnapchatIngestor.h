@@ -149,6 +149,8 @@ ARKIVE_PRIVATE:
     int m_peopleWritten = 0;
     int m_conversationsWritten = 0;
     int m_memoriesWritten = 0;
+    int m_parsedItemCount = 0;
+    QString m_currentFileName;
 };
 
 #endif // SNAPCHATINGESTOR_H

@@ -128,10 +128,52 @@ ApplicationWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: root.importPanelVisible = !root.importPanelVisible
+                    onClicked: {
+                        console.info("UI: Import panel toggled", root.importPanelVisible ? "closed" : "opened")
+                        root.importPanelVisible = !root.importPanelVisible
+                        if (root.importPanelVisible) root.skillPanelVisible = false
+                    }
 
                     ToolTip.text: "Import data"
                     ToolTip.visible: importBtn.containsMouse
+                    ToolTip.delay: 600
+                }
+            }
+
+            // Wiki Tools button
+            Rectangle {
+                width: 32
+                height: 32
+                radius: theme.radiusMedium
+                color: skillBtn.containsMouse
+                    ? (root.skillPanelVisible ? theme.accent : theme.bgOverlay)
+                    : (root.skillPanelVisible ? Qt.alpha(theme.accent, 0.15) : "transparent")
+
+                Behavior on color { ColorAnimation { duration: theme.animFast } }
+
+                Label {
+                    text: "⬡"
+                    font.pixelSize: theme.fontSubhead
+                    color: root.skillPanelVisible ? theme.accent
+                         : skillBtn.containsMouse ? theme.textPrimary : theme.textSecondary
+                    anchors.centerIn: parent
+
+                    Behavior on color { ColorAnimation { duration: theme.animFast } }
+                }
+
+                MouseArea {
+                    id: skillBtn
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        console.info("UI: Skill panel toggled", root.skillPanelVisible ? "closed" : "opened")
+                        root.skillPanelVisible = !root.skillPanelVisible
+                        if (root.skillPanelVisible) root.importPanelVisible = false
+                    }
+
+                    ToolTip.text: "Wiki tools"
+                    ToolTip.visible: skillBtn.containsMouse
                     ToolTip.delay: 600
                 }
             }
@@ -159,7 +201,10 @@ ApplicationWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: theme.darkMode = !theme.darkMode
+                    onClicked: {
+                        console.info("UI: Theme toggled to", theme.darkMode ? "light" : "dark")
+                        theme.darkMode = !theme.darkMode
+                    }
 
                     ToolTip.text: theme.darkMode ? "Switch to light mode" : "Switch to dark mode"
                     ToolTip.visible: themeToggleBtn.containsMouse
@@ -190,7 +235,10 @@ ApplicationWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: settingsDrawer.open()
+                    onClicked: {
+                        console.info("UI: Settings drawer opened")
+                        settingsDrawer.open()
+                    }
                 }
             }
         }
@@ -273,7 +321,10 @@ ApplicationWindow {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: fileTreeModel.refresh()
+                                onClicked: {
+                                    console.info("UI: Vault refresh requested")
+                                    fileTreeModel.refresh()
+                                }
 
                                 ToolTip.text: "Refresh"
                                 ToolTip.visible: refreshBtn.containsMouse
@@ -296,6 +347,7 @@ ApplicationWindow {
                     Layout.fillHeight: true
                     onFileSelected: function(path) {
                         root.importPanelVisible = false
+                        root.skillPanelVisible = false
                         articleModel.loadFromFile(path)
                     }
                 }
@@ -310,7 +362,7 @@ ApplicationWindow {
             // Article view
             ArticleView {
                 anchors.fill: parent
-                visible: !importPanelVisible
+                visible: !importPanelVisible && !skillPanelVisible
             }
 
             // Import panel
@@ -318,11 +370,18 @@ ApplicationWindow {
                 anchors.fill: parent
                 visible: importPanelVisible
             }
+
+            // Skill panel (Wiki Tools)
+            SkillPanel {
+                anchors.fill: parent
+                visible: skillPanelVisible
+            }
         }
     }
 
     // Track which view is active
     property bool importPanelVisible: false
+    property bool skillPanelVisible: false
 
     // Empty state overlay
     Rectangle {
@@ -437,7 +496,10 @@ ApplicationWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: root.importPanelVisible = true
+                    onClicked: {
+                        console.info("UI: Import panel opened from empty state")
+                        root.importPanelVisible = true
+                    }
                 }
             }
         }

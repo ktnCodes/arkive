@@ -14,9 +14,12 @@
 
 #include "core/VaultManager.h"
 #include "core/GeocodeCache.h"
+#include "core/CloudLlmClient.h"
+#include "core/WikiCompiler.h"
 #include "core/MessageIngestor.h"
 #include "core/PhotoIngestor.h"
 #include "core/SnapchatIngestor.h"
+#include "core/IndexManager.h"
 #include "models/FileTreeModel.h"
 #include "models/ArticleModel.h"
 
@@ -126,6 +129,14 @@ int main(int argc, char *argv[])
     MessageIngestor messageIngestor(&vaultManager);
     SnapchatIngestor snapchatIngestor(&vaultManager);
 
+    // Initialize LLM client and wiki compiler
+    CloudLlmClient cloudLlmClient;
+    WikiCompiler wikiCompiler(&vaultManager, &cloudLlmClient);
+
+    // Initialize index manager
+    IndexManager indexManager;
+    indexManager.setVaultPath(vaultManager.vaultPath());
+
     // Set up QML engine
     QQmlApplicationEngine engine;
 
@@ -136,6 +147,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("photoIngestor", &photoIngestor);
     engine.rootContext()->setContextProperty("messageIngestor", &messageIngestor);
     engine.rootContext()->setContextProperty("snapchatIngestor", &snapchatIngestor);
+    engine.rootContext()->setContextProperty("cloudLlmClient", &cloudLlmClient);
+    engine.rootContext()->setContextProperty("wikiCompiler", &wikiCompiler);
+    engine.rootContext()->setContextProperty("indexManager", &indexManager);
 
     // Load main QML
     using namespace Qt::StringLiterals;
