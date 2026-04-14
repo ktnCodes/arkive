@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 9.0.0, 2026-04-10T16:10:46. -->
+<!-- Written by QtCreator 9.0.0, 2026-04-12T21:39:31. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -68,7 +68,119 @@
     <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:ArticleModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:ClearResetsAllFields">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileEmitsArticleChanged">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileExtractsBacklinks">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileExtractsSectionHeadings">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileGeneratesHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFilePreservesRawContent">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileSetsFilePath">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileSetsTitleFromH1">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadFromFileUsesFilenameAsFallbackTitle">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:LoadNonexistentFileClearsModel">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_article_model.cpp:NotLoadedByDefault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:DefaultDimensionsAreZero">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:DefaultGpsCoordinatesAreZero">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:DefaultOrientationIsOne">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:ExifReaderTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:ReturnsEmptyForEmptyFile">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:ReturnsEmptyForMinimalJpegWithoutExif">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:ReturnsEmptyForNonJpegFile">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_exif_reader.cpp:ReturnsEmptyForNonexistentFile">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:ChildEntriesAccessibleViaParentIndex">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:ColumnCountIsAlwaysOne">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:CountsOnlyMarkdownFiles">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:DirectoryEntriesReturnIsDir">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:FileCountIsZeroByDefault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:FileEntriesReturnNotIsDir">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:FileTreeModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:FullPathRoleReturnsAbsolutePath">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:HiddenFilesAreExcluded">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:RoleNamesContainsExpectedRoles">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:RootPathIsEmptyByDefault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:RowCountReflectsTopLevelEntries">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_file_tree_model.cpp:SetRootPathTriggersRefresh">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:CacheKeyDifferentForDistantPoints">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:CacheKeyHandlesNegativeCoordinates">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:CacheKeyHandlesZeroCoordinates">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:CacheKeyIsConsistentForSameInput">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:CacheKeyRoundsToGrid">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:DatabaseFileCreatedOnConstruction">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:GeocodeCacheTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_geocode_cache.cpp:LookupCachedReturnsEmptyForMissing">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:EmptySectionHasZeroArticles">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:IndexManagerTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:RebuildCreatesMasterIndex">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:RebuildCreatesSectionIndexFiles">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:RebuildIndexesCountsArticles">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:SectionInfoListsArticleSlugs">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:SectionInfoReturnsCorrectCount">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:SkipsIndexFilesStartingWithUnderscore">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:TotalArticleCountStartsAtZero">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_index_manager.cpp:UpdateSectionIndexUpdatesOnlyThatSection">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsBacklinksToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsBoldToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsH1ToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsH2ToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsH3ToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsItalicToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ConvertsListItemsToHtml">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:DeduplicatesBacklinks">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ExtractsBacklinks">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ExtractsTitleFromFirstH1Only">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ExtractsTitleFromH1">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ExtractsTitleIgnoresH2">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ExtractsTitleReturnsEmptyForNoHeadings">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:FullParseReturnsAllFields">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:HandlesBacklinkWithSpaces">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:HandlesNoFrontmatter">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:MarkdownParserTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ParsesSectionsFromHeadings">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ParsesYamlFrontmatter">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:ReturnsEmptyForNoBacklinks">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_markdown_parser.cpp:SectionContentExcludesNextHeading">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:ConversationTitleFallsBackToParticipants">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:GenerateMarkdownContainsConversationFacts">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:ImportDatabaseCreatesConversationEntry">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:ImportErrorForMissingDatabase">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:MessageIngestorTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_message_ingestor.cpp:ParseAppleTimestampHandlesNanoseconds">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateMarkdownContainsSections">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateMarkdownContainsTitle">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateMarkdownIncludesCameraModel">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateMarkdownIncludesConnectionBacklink">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateMarkdownIncludesGpsCoords">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateSlugAppendsPlaceName">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateSlugHandlesSpecialCharacters">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:GenerateSlugUsesDateOnly">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:ImportErrorForNonexistentFolder">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:ImportFinishesWithZeroForEmptyFolder">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:LocationKeyDiffersForDistantPoints">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:LocationKeyGroupsNearbyCoordinates">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:NotRunningByDefault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:PhotoIngestorTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:SupportedExtensionsIncludesCommonFormats">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_photo_ingestor.cpp:SupportedExtensionsIncludesJpeg">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_snapchat_ingestor.cpp:ImportErrorForMissingFolder">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_snapchat_ingestor.cpp:ImportExportFolderCreatesPeopleConversationAndMemoryEntries">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_snapchat_ingestor.cpp:ImportFolderWithoutSupportedJsonEmitsEmptyImport">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_snapchat_ingestor.cpp:ParseTimestampSupportsIsoStrings">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_snapchat_ingestor.cpp:SnapchatIngestorTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:EnsureVaultExistsCreatesDirectories">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:EnsureVaultExistsCreatesMasterIndex">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:ReadFileRejectsPathOutsideVault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:ReadNonexistentFileReturnsEmpty">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:SectionsContainsExpectedDefaults">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:SectionsHasExactlyFive">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:VaultExistsReturnsTrueAfterCreation">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:VaultManagerTest">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:VaultPathEndsWithArkiveVault">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:VaultPathIsNotEmpty">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:WriteAndReadFileRoundtrip">Checked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/kevin/Workspace/coding-projects/arkive/tests/test_vault_manager.cpp:WriteFileCreatesParentDirectories">Checked</value>
+   </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuemap type="QVariantMap" key="ClangTools">
